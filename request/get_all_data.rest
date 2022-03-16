@@ -1,0 +1,31 @@
+### Exercises 3.1
+GET  http://localhost:3001/api/persons
+
+### Exercises 3.2
+GET  http://localhost:3001/info
+
+### Exercises 3.3
+GET http://localhost:3001/api/persons/1
+### Exercises 3.3
+GET http://localhost:3001/api/persons/nothing
+
+### Exercises 3.4
+DELETE  http://localhost:3001/api/persons/3
+
+### Exercises 3.5
+POST  http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Meowmini",
+    "number": "123456"
+}
+
+### Exercises 3.6
+POST  http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Meowmini",
+    "number": "123456"
+}
