@@ -63,8 +63,10 @@ end note
 
 —————————————————————— 0.6 ——————————————————————
 
-browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-
 note over browser:
 The event handler calls the method e.preventDefault() to prevent the default handling of form submit. 
-Then the event handler adds a new note to the notes list , rerenders the note list on the page and sends the new note to the server.
+Then the event handler adds a new note to the notes list , rerenders the note list on the page .
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+Then sends the new note to the server.
