@@ -1,7 +1,8 @@
 import React from 'react'
 
 export default function Part(props) {
+  console.log(props)
   return (
-    <p>{props.part} {props.exercise}</p>
+    <p>{props.name} {props.exercises}</p>
   )
 }
