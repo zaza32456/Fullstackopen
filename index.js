@@ -82,7 +82,7 @@ app.post("/api/persons", (req,res) => {
             error:"Please check the name and number"
         })
     }
-
+    notes = notes.concat(body)
     res.json(body)
 
 })
