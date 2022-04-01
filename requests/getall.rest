@@ -1,1 +1,14 @@
 post http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "你才是恶魔",
+  "number": "2222222",
+  "id": 5
+}
+
+###
+DELETE http://localhost:3001/api/persons/5
+
+###
+GET http://localhost:3001/api/persons HTTP/1.1
