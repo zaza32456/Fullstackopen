@@ -2,7 +2,9 @@ const express = require("express")
 const app = express()
 const morgan = require("morgan") 
 const cors = require("cors")
+//cors需要放在数组前
 app.use(cors())
+app.use(express.static("build"))
 
 let notes = [
     { 
