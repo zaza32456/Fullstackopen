@@ -3,8 +3,7 @@ Content-Type: application/json
 
 {
   "name": "你才是恶魔",
-  "number": "2222222",
-  "id": 5
+  "number": "2222222"
 }
 
 ###
@@ -12,3 +11,9 @@ DELETE http://localhost:3001/api/persons/5
 
 ###
 GET http://localhost:3001/api/persons HTTP/1.1
+
+###
+GET http://localhost:3001/info
+
+###
+get http://localhost:3001/api/persons/62504f46947cc4d9f6c97d
