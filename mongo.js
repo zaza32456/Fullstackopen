@@ -2,6 +2,7 @@ require("dotenv").config()
 const mongoose = require("mongoose")
 const Person = require("./models/person")
 
+//查询修改DB数据库小程序
 
 if (process.argv.length === 4) {
   const personName = process.argv[2]
