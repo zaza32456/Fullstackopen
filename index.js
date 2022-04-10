@@ -60,9 +60,14 @@ app.get("/api/persons/:id", (req, res, next) => {
 //删除对应URL资源
 app.delete("/api/persons/:id", (req, res, next) => {
     const id = req.params.id
-    Person.findByIdAndDelete(id)
+    Person.findByIdAndRemove(id)
         .then(result => {
-            res.status(204).end()
+            if (result) {
+                res.status(204).end()
+            }else {
+                res.status(404).end()
+            }
+            
         })
         .catch(error => next(error))
 /*     
