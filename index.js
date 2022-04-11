@@ -77,7 +77,7 @@ app.delete("/api/persons/:id", (req, res, next) => {
 })
 
 // 更改资源
-app.post("/api/persons", (req,res) => {
+app.post("/api/persons", (req, res, next)  => {
     const body = req.body
     
     const person = new Person({
@@ -87,12 +87,16 @@ app.post("/api/persons", (req,res) => {
 
     console.log("创建实例", person)
 
-    person.save().then(savedPerson => {
-        console.log("savedPerson = ", savedPerson)
-        //这里的json使用了toJSON格式化内容？
-        res.json(savedPerson)
-    }
+    person.save()
+        .then(savedPerson => {
+            console.log("savedPerson = ", savedPerson)
+            //这里的json使用了toJSON格式化内容？
+            res.json(savedPerson)
+            }
         )
+        .catch(error => {
+            next(error)
+        })
 
     //获得post方法发来的请求数据：body
 /*     

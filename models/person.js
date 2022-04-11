@@ -13,8 +13,13 @@ mongoose.connect(url)
 
 //创建personSchema
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minlength: 3
+  },
+  number: {
+    type: String
+  }
 })
 
 //格式化toJSON返回的数据，去除_id,__v,增加将_id字符串化的id
