@@ -77,9 +77,10 @@ app.delete("/api/persons/:id", (req, res, next) => {
 })
 
 // 更改资源
+/*3.20名字相同时直接返回错误代码
 app.post("/api/persons", (req, res, next)  => {
     const body = req.body
-    
+
     const person = new Person({
         name: body.name,
         number: body.number
@@ -97,14 +98,15 @@ app.post("/api/persons", (req, res, next)  => {
         .catch(error => {
             next(error)
         })
+      
 
     //获得post方法发来的请求数据：body
-/*     
     const body = req.body
     console.log(req.body)
     notes = notes.concat(body)
-    res.json(body) */
+    res.json(body) 
 })
+*/  
 
 app.put("/api/persons/:id", (req, res) => {
     const body = req.body
@@ -132,10 +134,13 @@ app.put("/api/persons/:id", (req, res) => {
 })
 
 //错误处理程序放在最后
-const errorHandler = (error, request, response, next) => {
-    console.log("发生错误。错误内容为:", error.message)
+const errorHandler = (error, req, res, next) => {
     if (error.name === "CastError" && error.kind === "ObejectId" ) {
         return res.status(400).send({error: "malformatted id"})
+    }else if (error.name === "ValidationError") {
+        //json数据怎么处理？
+        console.log("发生错误。错误内容为:", error.message)
+        return res.status(400).json({error: error.message})
     }
     //最后next到哪？
     next (error)

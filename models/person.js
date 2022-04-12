@@ -18,7 +18,15 @@ const personSchema = new mongoose.Schema({
     minlength: 3
   },
   number: {
-    type: String
+    type: String,
+    minlength: [8, "The phone number needs 8 digits or more"],
+    //验证号码
+    validate: {
+      validator: value => {
+        return /^\d{2,3}-?\d{0,}$/.test(value)
+      },
+      message:props => `${props.value} is not a vaild phone number!`
+    }
   }
 })
 
@@ -31,5 +39,11 @@ personSchema.set("toJSON", {
   }
 })
 
+//3.20* 验证号码
+/*
+Person.schema.path("number").validate(value => {
+  return /^\d{2,3}-?\d{4,}$/.test(value)
+}, "Invalid number")
+*/
 //导出模块
 module.exports = mongoose.model("Person", personSchema)

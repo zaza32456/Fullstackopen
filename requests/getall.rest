@@ -2,8 +2,8 @@ post http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-  "name": "你才是恶魔",
-  "number": "2222222"
+  "name": "恶魔是笨蛋",
+  "number": "22264777"
 }
 
 ###
