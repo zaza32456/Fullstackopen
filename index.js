@@ -77,7 +77,7 @@ app.delete("/api/persons/:id", (req, res, next) => {
 })
 
 // 更改资源
-/*3.20名字相同时直接返回错误代码
+
 app.post("/api/persons", (req, res, next)  => {
     const body = req.body
 
@@ -96,17 +96,20 @@ app.post("/api/persons", (req, res, next)  => {
             }
         )
         .catch(error => {
+            console.log("出错了!错误信息为:", error.message)
             next(error)
         })
       
 
     //获得post方法发来的请求数据：body
+/*
     const body = req.body
     console.log(req.body)
     notes = notes.concat(body)
     res.json(body) 
+*/
 })
-*/  
+
 
 app.put("/api/persons/:id", (req, res) => {
     const body = req.body
@@ -141,6 +144,8 @@ const errorHandler = (error, req, res, next) => {
         //json数据怎么处理？
         console.log("发生错误。错误内容为:", error.message)
         return res.status(400).json({error: error.message})
+    }if (error.name === "MongoServerError") {
+        return res.status(400).send({error:"Name must be unique!"})
     }
     //最后next到哪？
     next (error)
