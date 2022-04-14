@@ -20,7 +20,7 @@ if (process.argv.length === 4) {
 }else if (process.argv.length === 2) {
   console.log("phonebook:")
   Person.find({}).then(result => {
-    result.forEach(n =>{ 
+    result.forEach(n => {
       console.log(n.name, n.number)
     })
     //注意和数据库的连接断开的位置!!

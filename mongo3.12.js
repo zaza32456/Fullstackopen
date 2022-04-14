@@ -1,6 +1,6 @@
 require("dotenv").config()
 const mongoose = require("mongoose")
-/* 
+/*
 if (process.argv.length < 3) {
   console.log("Please provide the password")
   process.exit(1)
@@ -46,7 +46,7 @@ if (process.argv.length === 4) {
 }else if (process.argv.length === 2) {
   console.log("phonebook:")
   Person.find({}).then(result => {
-    result.forEach(n =>{ 
+    result.forEach(n => {
       console.log(n.name, n.number)
     })
     //注意和数据库的连接断开的位置!!

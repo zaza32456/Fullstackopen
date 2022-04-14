@@ -2,7 +2,7 @@ require("dotenv").config()
 const express = require("express")
 const app = express()
 const Person = require("./models/person")
-const morgan = require("morgan") 
+const morgan = require("morgan")
 const cors = require("cors")
 const { response } = require("express")
 const res = require("express/lib/response")
@@ -16,36 +16,36 @@ morgan.token("rescontent", function (req, res) { return JSON.stringify(req.body)
 app.use(morgan("phai"))
 
 app.get("/api/persons", (req, res) => {
-    Person.find({}).then(people => {
-      res.json(people)
-    })
+  Person.find({}).then(people => {
+    res.json(people)
+  })
 })
 
 app.get("/info", (req, res) => {
-    const date = new Date()
-    //除了find有其他的方法嘛？
-    Person.find({}).then(people => {
-        res.send(`<p>Phonebook has info for ${people.length} people</p>
+  const date = new Date()
+  //除了find有其他的方法嘛？
+  Person.find({}).then(people => {
+    res.send(`<p>Phonebook has info for ${people.length} people</p>
             <br>
             <p>${date}</p>`)
-    })
-    
+  })
+
 })
 
 //返回对应URL资源
 app.get("/api/persons/:id", (req, res, next) => {
-    //注意id类型，这里是字符串类型，不用转换数字
-    const id = req.params.id
-    console.log("find id",id)
-    Person.findById(id)
-            //！！需要查文档了解then里的参数是否保留字
-          .then(person => {
-            res.json(person)
-            })
-          .catch((error) => {
-              console.log(error.message)
-              next(error)
-          })
+  //注意id类型，这里是字符串类型，不用转换数字
+  const id = req.params.id
+  console.log("find id",id)
+  Person.findById(id)
+  //！！需要查文档了解then里的参数是否保留字
+    .then(person => {
+      res.json(person)
+    })
+    .catch((error) => {
+      console.log(error.message)
+      next(error)
+    })
     //find返回对象，filter返回数组
 /*     const note = notes.find(n => n.id === id)
 
@@ -59,74 +59,75 @@ app.get("/api/persons/:id", (req, res, next) => {
 
 //删除对应URL资源
 app.delete("/api/persons/:id", (req, res, next) => {
-    const id = req.params.id
-    Person.findByIdAndRemove(id)
-        .then(result => {
-            if (result) {
-                res.status(204).end()
-            }else {
-                res.status(404).end()
-            }
-            
-        })
-        .catch(error => next(error))
-/*     
+  const id = req.params.id
+  Person.findByIdAndRemove(id)
+    .then(result => {
+      if (result) {
+        res.status(204).end()
+      }else {
+        res.status(404).end()
+      }
+
+    })
+    .catch(error => next(error))
+/*
     const id = Number(req.params.id)
     notes = notes.filter(n => n.id !== id)
-    res.status(204).end() */
+    res.status(204).end() 
+*/
 })
 
 // 更改资源
 
 app.post("/api/persons", (req, res, next)  => {
-    const body = req.body
+  const body = req.body
 
-    const person = new Person({
-        name: body.name,
-        number: body.number
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
+
+  console.log("创建实例", person)
+
+  person.save()
+    .then(savedPerson => {
+      console.log("savedPerson = ", savedPerson)
+      //这里的json使用了toJSON格式化内容？
+      res.json(savedPerson)
+    }
+    )
+    .catch(error => {
+      console.log("出错了!错误信息为:", error.message)
+      next(error)
     })
 
-    console.log("创建实例", person)
 
-    person.save()
-        .then(savedPerson => {
-            console.log("savedPerson = ", savedPerson)
-            //这里的json使用了toJSON格式化内容？
-            res.json(savedPerson)
-            }
-        )
-        .catch(error => {
-            console.log("出错了!错误信息为:", error.message)
-            next(error)
-        })
-      
-
-    //获得post方法发来的请求数据：body
+  //获得post方法发来的请求数据：body
 /*
     const body = req.body
     console.log(req.body)
     notes = notes.concat(body)
-    res.json(body) 
+    res.json(body)
 */
 })
 
 
 app.put("/api/persons/:id", (req, res) => {
-    const body = req.body
-    const id = req.params.id
+  const body = req.body
+  const id = req.params.id
 
-    //创建对象，而不是构造一个新的person实例
-    const person = {
-        name: body.name,
-        number: body.number        
-    }
+  //创建对象，而不是构造一个新的person实例
+  const person = {
+    name: body.name,
+    number: body.number
+  }
 
-    Person.findByIdAndUpdate(id, person, {new: true})
-        .then(updatedPerson => {
-            console.log("后端数据库已更新", updatedPerson)
-            res.json(updatedPerson)
-        })
-        .catch(error => next(error))
+  Person.findByIdAndUpdate(id, person, { new: true }, next)
+    .then(updatedPerson => {
+      console.log("后端数据库已更新", updatedPerson)
+      res.json(updatedPerson)
+    })
+    .catch(error => next(error))
 
 /*   const body = req.body
   const id = Number(req.params.id)
@@ -138,22 +139,22 @@ app.put("/api/persons/:id", (req, res) => {
 
 //错误处理程序放在最后
 const errorHandler = (error, req, res, next) => {
-    if (error.name === "CastError" && error.kind === "ObejectId" ) {
-        return res.status(400).send({error: "malformatted id"})
-    }else if (error.name === "ValidationError") {
-        //json数据怎么处理？
-        console.log("发生错误。错误内容为:", error.message)
-        return res.status(400).json({error: error.message})
-    }if (error.name === "MongoServerError") {
-        return res.status(400).send({error:"Name must be unique!"})
-    }
-    //最后next到哪？
-    next (error)
+  if (error.name === "CastError" && error.kind === "ObejectId" ) {
+    return res.status(400).send({ error: "malformatted id" })
+  }else if (error.name === "ValidationError") {
+    //json数据怎么处理？
+    console.log("发生错误。错误内容为:", error.message)
+    return res.status(400).json({ error: error.message })
+  }if (error.name === "MongoServerError") {
+    return res.status(400).send({ error:"Name must be unique!" })
+  }
+  //最后next到哪？
+  next (error)
 }
 
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`)
+  console.log(`Server running on ${PORT}`)
 })
