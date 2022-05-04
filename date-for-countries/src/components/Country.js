@@ -39,12 +39,12 @@ export const Country = ({name}) => {
         <li key={index+1}>{countryInfo.languages[n]}</li>
         )}
       </ul>
-      <img src={countryInfo.flags.svg}></img>
+      <img alt="flag" src={countryInfo.flags.svg}></img>
       <h2>Weather in {countryInfo.capital}</h2>
       <div className='weatherinfo'>
         <h3>temperature:</h3><div className='info-font'>{weatherInfo.main.temp} Celcius</div>
       </div>
-      <img src={`http://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}></img>
+      <img alt="weather" src={`http://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`}></img>
       <div className='weatherinfo'>
         <h3>wind:</h3><div className='info-font'>{weatherInfo.wind.speed} mph</div>
       </div>

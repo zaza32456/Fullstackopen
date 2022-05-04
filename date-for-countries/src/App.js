@@ -1,6 +1,4 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Country } from './components/Country';
+import { useState } from 'react';
 import "./App.css"
 import { Filter } from './components/Filter';
 
