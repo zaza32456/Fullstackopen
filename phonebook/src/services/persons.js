@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl =  "http://localhost:3001/persons"
+const baseUrl =  "/api/persons"
 
 const getPage = () => {
   return axios.get(baseUrl)
@@ -8,6 +8,7 @@ const getPage = () => {
 
 const getAll = () => {
   const requst = axios.get(baseUrl)
+  console.log("get")
   return requst.then(res => res.data)
 }
 

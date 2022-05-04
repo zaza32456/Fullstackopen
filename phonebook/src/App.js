@@ -14,6 +14,7 @@ export default function App() {
   const [newNumber, setNewNumber] = useState('')
   const [find, setFind] = useState('')
   const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   //查询电话本信息
   useEffect(() => {
@@ -42,7 +43,12 @@ export default function App() {
   //增加电话本人员信息 - 事件处理程序
   const addNote = (e) => {
     e.preventDefault()
-
+    
+    //判断姓名电话是否都输入
+    if (!newName || !newNumber) {
+        return alert("Please check the name and number")
+      }
+    /*3.20 给后端判断
     //判断是否重名
     if (nameArr.find(n => n === newName)) {
       const oldNote = persons.find(n => n.name === newName)
@@ -70,18 +76,21 @@ export default function App() {
             setNewNumber("")
           })
           .catch(error => {
-            alert("error!")
+            setErrorMessage(error.message)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 4000)
           })
         return;
       }else {
         return;
       }
     } 
-      
+    */  
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: newName
+      //id: Math.floor(Math.random() * 10**10 + 1)//随机数ID
     }
   
     noteService
@@ -95,6 +104,12 @@ export default function App() {
         setNewName("")
         setNewNumber("")
       })
+      .catch(error => {
+        setErrorMessage(error.response.data.error)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 4000)
+      })
   
   }
 
@@ -102,7 +117,8 @@ export default function App() {
   const delPerson = id => {
 
     console.log(`我要删除ID为${id}的人员`)
-    const delperson = persons.find(n => n.id === id) //获得数据的思维有问题，总是用person[id]
+    //获得数据的思维有问题，总是用person[id],学会使用.find
+    const delperson = persons.find(n => n.id === id) 
     console.log("presons = ", delperson)
     if (window.confirm(`Delete ${delperson.name} ?`)) {
       noteService
@@ -119,8 +135,8 @@ export default function App() {
     <div>
       <h2>Phonebook</h2>
 
-      {message !== null &&
-        <Message message={message}/>
+      {(message !== null || errorMessage !== null) &&
+        <Message message={message} errorMessage={errorMessage}/>
       }
 
       <Filter 

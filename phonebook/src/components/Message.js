@@ -1,9 +1,18 @@
 import React from 'react'
 
-const Message = ({message}) => {
-
+const Message = ({message, errorMessage}) => {
+  
   return (
-    <div className="message">{message}</div>
+    <>
+    {message !== null &&
+      <div className="message">{message}</div>
+    }
+
+    {errorMessage !== null &&
+      <div className="errormessage">{errorMessage}</div>
+    }
+    </>
+    
   )
 }
 

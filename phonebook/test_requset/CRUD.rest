@@ -1,21 +1,21 @@
 
-get http://localhost:3001/persons
+get https://phonebook-app-p3.herokuapp.com/api/persons
 
 ###
 DELETE http://localhost:3001/persons/8
 
 ###
-post http://localhost:3001/persons
+post https://phonebook-app-p3.herokuapp.com/api/persons
 Content-Type: application/json
 
 {
   "name": "你才是恶魔",
   "number": "2222222",
-  "id": 8
+  "id": 5
 }
 
 ###
-PUT http://localhost:3001/persons/8
+PUT https://phonebook-app-p3.herokuapp.com/api/persons/8
 Content-Type: application/json
 
 {
