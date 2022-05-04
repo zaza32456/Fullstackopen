@@ -1,0 +1,12 @@
+img {
+  height: 100px;
+}
+.weatherinfo {
+  display: flex;
+}
+
+.info-font {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+}
