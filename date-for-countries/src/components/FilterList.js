@@ -13,7 +13,10 @@ export const FilterList = ({name}) => {
   return (
     <>
     <div className='list'>
-      <div>{name}</div><button className='btn-show' onClick={handleShow}>show</button>
+      <div>{name}</div>
+      <button className='btn-show' onClick={handleShow}>
+        {show? "hide":"show" }
+      </button>
     </div>
     {show && 
       <Country name={name}/>}
